@@ -2,23 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Property;
+use Illuminate\View\View;
 
 class PropertyController extends Controller
 {
-    public function index()
+    public function index(): View
     {
-        $properties = Property::all();
-
-        return view('properties.index', compact('properties'));
+        return view('properties.index', [
+            'properties' => Property::latest()->get(),
+        ]);
     }
 
-    public function show(Property $property)
-
+    public function show(Property $property): View
     {
         return view('properties.show', compact('property'));
     }
-
-
 }
