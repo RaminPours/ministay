@@ -2,24 +2,39 @@
 
 namespace Database\Seeders;
 
+use App\Models\Property;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    use WithoutModelEvents;
-
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // User::factory(10)->create();
+        $host = User::factory()->create([
+            'name' => 'MiniStay Host',
+            'email' => 'host@ministay.test',
+        ]);
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        Property::create([
+            'user_id' => $host->id,
+            'titel' => 'Rustig appartement in Utrecht',
+            'beschrijving' => 'Een eenvoudig en comfortabel appartement dichtbij het centrum.',
+            'stad' => 'Utrecht',
+            'prijs_per_nacht' => 85,
+            'aantal_slaapkamers' => 1,
+            'aantal_bedden' => 2,
+            'aantal_badkamers' => 1,
+        ]);
+
+        Property::create([
+            'user_id' => $host->id,
+            'titel' => 'Lichte kamer in Amsterdam',
+            'beschrijving' => 'Een fijne kamer voor een kort verblijf in een rustige buurt.',
+            'stad' => 'Amsterdam',
+            'prijs_per_nacht' => 65,
+            'aantal_slaapkamers' => 1,
+            'aantal_bedden' => 1,
+            'aantal_badkamers' => 1,
         ]);
     }
 }
