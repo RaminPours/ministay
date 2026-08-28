@@ -16,12 +16,16 @@ class Property extends Model
         'prijs_per_nacht',
         'aantal_slaapkamers',
         'aantal_bedden',
-        'aantal_badkamers'
+        'aantal_badkamers',
     ];
-    
-    public function user(): HasMany
+
+    public function user(): BelongsTo
     {
-        return $this->hasMany(Property::class);
+        return $this->belongsTo(User::class);
     }
-    
+
+    public function bookings(): HasMany
+    {
+        return $this->hasMany(Booking::class);
+    }
 }
