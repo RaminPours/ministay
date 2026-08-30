@@ -17,6 +17,7 @@ class Property extends Model
         'aantal_slaapkamers',
         'aantal_bedden',
         'aantal_badkamers',
+        'image_path',
     ];
 
     public function user(): BelongsTo
