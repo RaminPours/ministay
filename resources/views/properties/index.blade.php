@@ -1,31 +1,54 @@
-<x-guest-layout>
-    <div class="max-w-6xl mx-auto px-6 py-10">
-        <div class="flex items-center justify-between mb-8">
-            <div>
-                <h1 class="text-3xl font-bold text-gray-900">MiniStay</h1>
-                <p class="text-gray-600 mt-1">Vind een eenvoudig en fijn verblijf.</p>
-            </div>
-            @auth
-                <a href="{{ route('bookings.index') }}" class="text-sm font-medium text-indigo-600">Mijn boekingen</a>
-            @else
-                <a href="{{ route('login') }}" class="text-sm font-medium text-indigo-600">Inloggen</a>
-            @endauth
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MiniStay · Woningen</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
+<body class="min-h-screen bg-slate-50 text-slate-900">
+    <header class="border-b border-slate-200 bg-white">
+        <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
+            <a href="{{ route('properties.index') }}" class="text-2xl font-bold tracking-tight text-indigo-600">MiniStay</a>
+            <nav class="flex items-center gap-4 text-sm font-medium">
+                @auth
+                    <a href="{{ route('bookings.index') }}" class="text-slate-600 hover:text-indigo-600">Mijn boekingen</a>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button class="rounded-lg border border-slate-300 px-3 py-2 text-slate-700 hover:bg-slate-50">Uitloggen</button>
+                    </form>
+                @else
+                    <a href="{{ route('login') }}" class="text-slate-600 hover:text-indigo-600">Inloggen</a>
+                    <a href="{{ route('register') }}" class="rounded-lg bg-indigo-600 px-4 py-2 text-white hover:bg-indigo-500">Account maken</a>
+                @endauth
+            </nav>
+        </div>
+    </header>
+
+    <main class="mx-auto max-w-6xl px-6 py-12">
+        <div class="mb-10 max-w-2xl">
+            <p class="text-sm font-semibold uppercase tracking-wider text-indigo-600">Eenvoudig verblijven</p>
+            <h1 class="mt-2 text-4xl font-bold tracking-tight sm:text-5xl">Vind jouw volgende MiniStay.</h1>
+            <p class="mt-4 text-lg text-slate-600">Een helder overzicht van fijne, betaalbare verblijven.</p>
         </div>
 
         @if ($properties->isEmpty())
-            <p class="rounded-lg bg-white p-6 text-gray-600 shadow">Er zijn nog geen woningen toegevoegd.</p>
+            <p class="rounded-xl bg-white p-6 text-slate-600 shadow-sm ring-1 ring-slate-200">Er zijn nog geen woningen toegevoegd.</p>
         @else
             <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 @foreach ($properties as $property)
-                    <a href="{{ route('properties.show', $property) }}" class="rounded-xl bg-white p-6 shadow hover:shadow-lg transition">
-                        <div class="text-4xl mb-4">🏠</div>
-                        <h2 class="text-xl font-semibold text-gray-900">{{ $property->titel }}</h2>
-                        <p class="mt-1 text-gray-600">📍 {{ $property->stad }}</p>
-                        <p class="mt-4 text-sm text-gray-600 line-clamp-3">{{ $property->beschrijving }}</p>
-                        <p class="mt-5 font-bold text-indigo-600">€{{ number_format($property->prijs_per_nacht, 2, ',', '.') }} <span class="font-normal text-gray-500">/ nacht</span></p>
+                    <a href="{{ route('properties.show', $property) }}" class="group overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200 transition hover:-translate-y-1 hover:shadow-lg">
+                        <div class="flex h-52 items-center justify-center bg-gradient-to-br from-indigo-100 to-violet-100 text-7xl">🏠</div>
+                        <div class="p-6">
+                            <h2 class="text-xl font-semibold text-slate-900 group-hover:text-indigo-600">{{ $property->titel }}</h2>
+                            <p class="mt-2 text-sm text-slate-600">📍 {{ $property->stad }}</p>
+                            <p class="mt-4 min-h-12 text-sm leading-6 text-slate-600">{{ Str::limit($property->beschrijving, 100) }}</p>
+                            <p class="mt-5 text-lg font-bold text-slate-900">€{{ number_format($property->prijs_per_nacht, 2, ',', '.') }} <span class="text-sm font-normal text-slate-500">per nacht</span></p>
+                        </div>
                     </a>
                 @endforeach
             </div>
         @endif
-    </div>
-</x-guest-layout>
+    </main>
+</body>
+</html>
