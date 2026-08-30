@@ -23,7 +23,11 @@
 
         <div class="mt-6 grid gap-10 lg:grid-cols-[minmax(0,1fr)_360px]">
             <section>
-                <div class="flex h-80 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-100 to-violet-100 text-8xl sm:h-96">🏠</div>
+                @if ($property->image_path)
+                    <img src="{{ asset('storage/'.$property->image_path) }}" alt="{{ $property->titel }}" class="h-80 w-full rounded-2xl object-cover sm:h-96">
+                @else
+                    <div class="flex h-80 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-100 to-violet-100 text-8xl sm:h-96">🏠</div>
+                @endif
                 <h1 class="mt-8 text-4xl font-bold tracking-tight">{{ $property->titel }}</h1>
                 <p class="mt-3 text-slate-600">📍 {{ $property->stad }}</p>
                 <div class="mt-7 border-y border-slate-200 py-6 text-sm text-slate-600">
