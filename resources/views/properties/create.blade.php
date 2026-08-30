@@ -5,7 +5,7 @@
 
     <div class="py-12">
         <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
-            <form method="POST" action="{{ route('properties.store') }}" class="space-y-6 bg-white p-6 shadow-sm sm:rounded-lg">
+            <form method="POST" action="{{ route('properties.store') }}" enctype="multipart/form-data" class="space-y-6 bg-white p-6 shadow-sm sm:rounded-lg">
                 @csrf
 
                 <div>
@@ -18,6 +18,13 @@
                     <label for="stad" class="block text-sm font-medium text-gray-700">Stad</label>
                     <input id="stad" name="stad" value="{{ old('stad') }}" required class="mt-1 block w-full rounded-md border-gray-300">
                     <x-input-error :messages="$errors->get('stad')" class="mt-2" />
+                </div>
+
+                <div>
+                    <label for="image" class="block text-sm font-medium text-gray-700">Foto <span class="text-gray-400">(optioneel)</span></label>
+                    <input id="image" name="image" type="file" accept="image/*" class="mt-1 block w-full text-sm text-gray-600">
+                    <p class="mt-1 text-xs text-gray-500">JPG, PNG of WebP, maximaal 5 MB.</p>
+                    <x-input-error :messages="$errors->get('image')" class="mt-2" />
                 </div>
 
                 <div>
