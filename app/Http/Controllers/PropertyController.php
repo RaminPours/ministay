@@ -28,7 +28,7 @@ class PropertyController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-        $property = $request->user()->properties()->create($request->validate([
+        $data = $request->validate([
             'titel' => ['required', 'string', 'max:120'],
             'beschrijving' => ['required', 'string', 'max:2000'],
             'stad' => ['required', 'string', 'max:100'],
@@ -36,7 +36,16 @@ class PropertyController extends Controller
             'aantal_slaapkamers' => ['required', 'integer', 'min:0'],
             'aantal_bedden' => ['required', 'integer', 'min:1'],
             'aantal_badkamers' => ['required', 'integer', 'min:0'],
-        ]));
+            'image' => ['nullable', 'image', 'max:5120'],
+        ]);
+
+        if ($request->hasFile('image')) {
+            $data['image_path'] = $request->file('image')->store('properties', 'public');
+        }
+
+        unset($data['image']);
+
+        $property = $request->user()->properties()->create($data);
 
         return redirect()->route('properties.show', $property)
             ->with('status', 'Je woning is toegevoegd.');
