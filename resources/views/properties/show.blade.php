@@ -7,16 +7,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen bg-slate-50 text-slate-900">
-    <header class="border-b border-slate-200 bg-white">
-        <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
-            <a href="{{ route('properties.index') }}" class="text-2xl font-bold tracking-tight text-indigo-600">MiniStay</a>
-            @auth
-                <a href="{{ route('bookings.index') }}" class="text-sm font-medium text-slate-600 hover:text-indigo-600">Mijn boekingen</a>
-            @else
-                <a href="{{ route('login') }}" class="text-sm font-medium text-slate-600 hover:text-indigo-600">Inloggen</a>
-            @endauth
-        </div>
-    </header>
+    <x-marketplace-navigation />
 
     <main class="mx-auto max-w-6xl px-6 py-10">
         <a href="{{ route('properties.index') }}" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">← Alle woningen</a>
