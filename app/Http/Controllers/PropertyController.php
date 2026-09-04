@@ -9,10 +9,35 @@ use Illuminate\View\View;
 
 class PropertyController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
+        $filters = $request->validate([
+            'city' => ['nullable', 'string', 'max:100'],
+            'guests' => ['nullable', 'integer', 'min:1'],
+            'starts_at' => ['nullable', 'date'],
+            'ends_at' => ['nullable', 'date', 'after:starts_at'],
+        ]);
+
+        $properties = Property::query();
+
+        if (! empty($filters['city'])) {
+            $properties->where('stad', 'like', '%'.$filters['city'].'%');
+        }
+
+        if (! empty($filters['guests'])) {
+            $properties->where('aantal_bedden', '>=', $filters['guests']);
+        }
+
+        if (! empty($filters['starts_at']) && ! empty($filters['ends_at'])) {
+            $properties->whereDoesntHave('bookings', function ($bookings) use ($filters) {
+                $bookings->where('status', '!=', 'cancelled')
+                    ->where('starts_at', '<', $filters['ends_at'])
+                    ->where('ends_at', '>', $filters['starts_at']);
+            });
+        }
+
         return view('properties.index', [
-            'properties' => Property::latest()->get(),
+            'properties' => $properties->latest()->get(),
         ]);
     }
 
