@@ -16,6 +16,13 @@
             <p class="mt-4 text-lg text-slate-600">Een helder overzicht van fijne, betaalbare verblijven.</p>
         </div>
 
+        @if (request()->hasAny(['city', 'guests', 'starts_at', 'ends_at']))
+            <div class="mb-6 flex items-center justify-between rounded-xl bg-rose-50 px-5 py-4 text-sm text-slate-700">
+                <span>{{ $properties->count() }} woning(en) gevonden</span>
+                <a href="{{ route('properties.index') }}" class="font-semibold text-rose-600 hover:text-rose-500">Wis zoekopdracht</a>
+            </div>
+        @endif
+
         @if ($properties->isEmpty())
             <p class="rounded-xl bg-white p-6 text-slate-600 shadow-sm ring-1 ring-slate-200">Er zijn nog geen woningen toegevoegd.</p>
         @else
