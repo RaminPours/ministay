@@ -30,7 +30,7 @@
                 @foreach ($properties as $property)
                     <a href="{{ route('properties.show', $property) }}" class="group overflow-hidden rounded-2xl bg-slate-900 shadow-sm ring-1 ring-white/10 transition hover:-translate-y-1 hover:shadow-lg">
                         @if ($property->image_path)
-                            <img src="{{ asset('storage/'.$property->image_path) }}" alt="{{ $property->titel }}" class="h-52 w-full object-cover">
+                            <img src="{{ Str::startsWith($property->image_path, ['http://', 'https://']) ? $property->image_path : asset('storage/'.$property->image_path) }}" alt="{{ $property->titel }}" class="h-52 w-full object-cover">
                         @else
                             <div class="flex h-52 items-center justify-center bg-gradient-to-br from-slate-800 to-slate-700 text-7xl">🏠</div>
                         @endif
