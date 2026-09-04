@@ -18,9 +18,11 @@
                     <x-nav-link :href="route('bookings.index')" :active="request()->routeIs('bookings.*')">
                         {{ __('Mijn boekingen') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('properties.create')" :active="request()->routeIs('properties.create')">
-                        {{ __('Woning toevoegen') }}
-                    </x-nav-link>
+                    @if (Auth::user()->is_admin)
+                        <x-nav-link :href="route('properties.create')" :active="request()->routeIs('properties.create')">
+                            {{ __('Woning toevoegen') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -79,9 +81,11 @@
             <x-responsive-nav-link :href="route('bookings.index')" :active="request()->routeIs('bookings.*')">
                 {{ __('Mijn boekingen') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('properties.create')" :active="request()->routeIs('properties.create')">
-                {{ __('Woning toevoegen') }}
-            </x-responsive-nav-link>
+            @if (Auth::user()->is_admin)
+                <x-responsive-nav-link :href="route('properties.create')" :active="request()->routeIs('properties.create')">
+                    {{ __('Woning toevoegen') }}
+                </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->
