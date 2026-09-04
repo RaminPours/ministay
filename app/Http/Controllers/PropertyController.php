@@ -21,13 +21,17 @@ class PropertyController extends Controller
         return view('properties.show', compact('property'));
     }
 
-    public function create(): View
+    public function create(Request $request): View
     {
+        abort_unless($request->user()->is_admin, 403);
+
         return view('properties.create');
     }
 
     public function store(Request $request): RedirectResponse
     {
+        abort_unless($request->user()->is_admin, 403);
+
         $data = $request->validate([
             'titel' => ['required', 'string', 'max:120'],
             'beschrijving' => ['required', 'string', 'max:2000'],
