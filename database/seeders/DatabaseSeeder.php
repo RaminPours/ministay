@@ -5,15 +5,17 @@ namespace Database\Seeders;
 use App\Models\Property;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        $host = User::factory()->create([
-            'name' => 'MiniStay Host',
-            'email' => 'host@ministay.test',
-        ]);
+        $host = User::firstOrCreate(
+            ['email' => 'host@ministay.test'],
+            ['name' => 'MiniStay Host', 'password' => Hash::make(Str::random(32))]
+        );
 
         $properties = [
             ['titel'=>'Canal Loft','stad'=>'Amsterdam','prijs'=>145,'slaapkamers'=>1,'bedden'=>2,'badkamers'=>1,'foto'=>'photo-1534351590666-13e3e96b5017'],
@@ -39,7 +41,7 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach ($properties as $item) {
-            Property::create([
+            Property::updateOrCreate(['titel' => $item['titel']], [
                 'user_id' => $host->id,
                 'titel' => $item['titel'],
                 'beschrijving' => 'Een comfortabel verblijf op een fijne locatie. Ideaal voor een weekend weg of een korte vakantie.',
