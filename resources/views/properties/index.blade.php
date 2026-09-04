@@ -7,26 +7,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen bg-slate-50 text-slate-900">
-    <header class="border-b border-slate-200 bg-white">
-        <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
-            <a href="{{ route('properties.index') }}" class="text-2xl font-bold tracking-tight text-indigo-600">MiniStay</a>
-            <nav class="flex items-center gap-4 text-sm font-medium">
-                @auth
-                    <a href="{{ route('bookings.index') }}" class="text-slate-600 hover:text-indigo-600">Mijn boekingen</a>
-                    @if (auth()->user()->is_admin)
-                        <a href="{{ route('properties.create') }}" class="rounded-lg bg-indigo-600 px-4 py-2 text-white hover:bg-indigo-500">Woning toevoegen</a>
-                    @endif
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <button class="rounded-lg border border-slate-300 px-3 py-2 text-slate-700 hover:bg-slate-50">Uitloggen</button>
-                    </form>
-                @else
-                    <a href="{{ route('login') }}" class="text-slate-600 hover:text-indigo-600">Inloggen</a>
-                    <a href="{{ route('register') }}" class="rounded-lg bg-indigo-600 px-4 py-2 text-white hover:bg-indigo-500">Account maken</a>
-                @endauth
-            </nav>
-        </div>
-    </header>
+    <x-marketplace-navigation />
 
     <main class="mx-auto max-w-6xl px-6 py-12">
         <div class="mb-10 max-w-2xl">
