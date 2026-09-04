@@ -33,7 +33,7 @@
             </section>
 
             <aside class="h-fit rounded-2xl bg-slate-900 p-6 shadow-lg ring-1 ring-slate-200 lg:sticky lg:top-6">
-                <p class="text-2xl font-bold">€{{ number_format($property->prijs_per_nacht, 2, ',', '.') }} <span class="text-sm font-normal text-slate-400">per nacht</span></p>
+                <p class="text-2xl font-bold text-white">€{{ number_format($property->prijs_per_nacht, 2, ',', '.') }} <span class="text-sm font-normal text-slate-400">per nacht</span></p>
 
                 @auth
                     <form method="POST" action="{{ route('bookings.store', $property) }}" class="mt-6 space-y-4">
