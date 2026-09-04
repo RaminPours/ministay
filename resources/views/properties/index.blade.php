@@ -38,7 +38,7 @@
                             <h2 class="text-xl font-semibold text-white group-hover:text-rose-400">{{ $property->titel }}</h2>
                             <p class="mt-2 text-sm text-slate-400">📍 {{ $property->stad }}</p>
                             <p class="mt-4 min-h-12 text-sm leading-6 text-slate-400">{{ Str::limit($property->beschrijving, 100) }}</p>
-                            <p class="mt-5 text-lg font-bold text-slate-900">€{{ number_format($property->prijs_per_nacht, 2, ',', '.') }} <span class="text-sm font-normal text-slate-400">per nacht</span></p>
+                            <p class="mt-5 text-lg font-bold text-white">€{{ number_format($property->prijs_per_nacht, 2, ',', '.') }} <span class="text-sm font-normal text-slate-400">per nacht</span></p>
                         </div>
                     </a>
                 @endforeach
