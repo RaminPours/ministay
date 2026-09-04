@@ -13,7 +13,9 @@
             <nav class="flex items-center gap-4 text-sm font-medium">
                 @auth
                     <a href="{{ route('bookings.index') }}" class="text-slate-600 hover:text-indigo-600">Mijn boekingen</a>
-                    <a href="{{ route('properties.create') }}" class="rounded-lg bg-indigo-600 px-4 py-2 text-white hover:bg-indigo-500">Woning toevoegen</a>
+                    @if (auth()->user()->is_admin)
+                        <a href="{{ route('properties.create') }}" class="rounded-lg bg-indigo-600 px-4 py-2 text-white hover:bg-indigo-500">Woning toevoegen</a>
+                    @endif
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button class="rounded-lg border border-slate-300 px-3 py-2 text-slate-700 hover:bg-slate-50">Uitloggen</button>
